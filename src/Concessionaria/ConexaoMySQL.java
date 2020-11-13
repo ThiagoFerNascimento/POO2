@@ -13,16 +13,36 @@ import java.sql.*;
 public class ConexaoMySQL {
     
     public static String URL = "jdbc:mysql://localhost:3306/poo2";
+    private static Connection con;
+    
+    public static Connection conectarMySQL() throws SQLException {
+        
+        try {
+            
+            Class.forName("com.mysql.jdbc.Driver");
+            
+            if(con == null) {
+                
+                System.out.println("Abrindo conexão com o banco de dados");
+                con = (Connection) DriverManager.getConnection(URL,"root","");
+            }
+        
+        } catch(ClassNotFoundException ex) {
+            System.out.println(ex.getMessage());
+        }
+        
+       return con;
+
+    }
     
     public static void cadastrarCarro(String marca, String modelo, String cor, 
             String quantidadePortas, String versao, String tipo, String anoFabricacao,
             String placa, String valor) throws SQLException {
-        
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection con = (Connection) DriverManager.getConnection(URL,"root","");
+       
+        if(con != null) {
+            
             String query = "INSERT INTO lista_carros(marca, modelo, cor, quantidade_portas, versao, tipo, ano_fabricacao, placa, valor)"+
-                                  "VALUES('{1}', '{2}', '{3}', {4}, '{5}', '{6}', {7}, '{8}', '{9}')";
+                              "VALUES('{1}', '{2}', '{3}', {4}, '{5}', '{6}', {7}, '{8}', '{9}')";
             Statement comandoSql = (Statement) con.createStatement();
 
             query = query.replace("{1}", marca)
@@ -34,15 +54,19 @@ public class ConexaoMySQL {
                          .replace("{7}", anoFabricacao)
                          .replace("{8}", placa)
                          .replace("{9}", valor);
-            
-            
-        
+
+
+
             comandoSql.execute(query);
-            
+        
+            System.out.println("Fechando conexão com o banco de dados");
             con.close();
+               
+            con = null;
             
-        } catch (ClassNotFoundException ex) {
-            System.out.println(ex.getMessage());
-        }    
+        } else {
+        
+            System.out.println("Não há uma conexão com o banco de dados");
+        }
     }
 }

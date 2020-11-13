@@ -4,6 +4,10 @@
  * and open the template in the editor.
  */
 package Concessionaria;
+
+import com.mysql.jdbc.Connection;
+import java.sql.SQLException;
+
 /**
  *
  * @author tfn-3
@@ -40,14 +44,18 @@ public class CarroObject {
         String status = "";
         
         try {
-        
+            
+            Connection conexaoMySQL = ConexaoMySQL.conectarMySQL();
+            System.out.println(conexaoMySQL);
+            
+            
             ConexaoMySQL.cadastrarCarro(this.marca, this.modelo, this.cor, 
             this.quantidadePortas, this.versao, this.tipo, this.anoFabricacao,
             this.placa, this.valor);
             
             status = "Registrado com sucesso";
             
-        } catch(Exception e) {
+        } catch(SQLException e) {
             
             status = "Falha no registro";            
         }

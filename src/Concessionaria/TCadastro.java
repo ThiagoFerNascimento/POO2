@@ -170,6 +170,7 @@ public class TCadastro extends JFrame{
         CarroObject carro = new CarroObject(marca, modelo, cor, qtdPortas, versao, tipo, anoFabricacao, placa, valor);
         String status = carro.registrarCarro();
         System.out.println(status);
+        System.out.println("---------------------------\n\n");
         
         txtModelo.setText("");
         txtMarca.setText("");
