@@ -20,30 +20,35 @@ import javax.swing.text.MaskFormatter;
 
 public class TCadastro extends JFrame{
     
-    JLabel lblModelo;
-    JTextField txtModelo;
-    JLabel lblMarca;
-    JTextField txtMarca;
-    JLabel lblCor;
-    JTextField txtCor;
-    JLabel lblQtdPortas;
-    JTextField txtQtdPortas;
+    private String useDB;
     
-    JLabel lblVersao;
-    JComboBox cmbVersao;
-    JLabel lblTipo;
-    JComboBox cmbTipo;
+    private JLabel lblModelo;
+    private JTextField txtModelo;
+    private JLabel lblMarca;
+    private JTextField txtMarca;
+    private JLabel lblCor;
+    private JTextField txtCor;
+    private JLabel lblQtdPortas;
+    private JTextField txtQtdPortas;
     
-    JLabel lblAnoFabricacao;
-    JFormattedTextField txtAnoFabricacao;
-    JLabel lblPlaca;
-    JFormattedTextField txtPlaca;
-    JLabel lblValor;
-    JFormattedTextField txtValor;
+    private JLabel lblVersao;
+    private JComboBox cmbVersao;
+    private JLabel lblTipo;
+    private JComboBox cmbTipo;
     
-    JButton btnEnviar;
+    private JLabel lblAnoFabricacao;
+    private JFormattedTextField txtAnoFabricacao;
+    private JLabel lblPlaca;
+    private JFormattedTextField txtPlaca;
+    private JLabel lblValor;
+    private JFormattedTextField txtValor;
+    
+    private JButton btnEnviar;
 
-    public TCadastro(){
+    public TCadastro(String useDB){
+        
+        this.useDB = useDB;
+        
         setTitle("Tela Inicial");
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -168,10 +173,9 @@ public class TCadastro extends JFrame{
         String valor = txtValor.getText().replace("R$", "").replace(".", "").replace(",", ".");
         
         CarroObject carro = new CarroObject(marca, modelo, cor, qtdPortas, versao, tipo, anoFabricacao, placa, valor);
-        String status = carro.registrarCarro();
-        System.out.println(status);
+        carro.registrarCarro(useDB);
         System.out.println("---------------------------\n\n");
-        
+
         txtModelo.setText("");
         txtMarca.setText("");
         txtCor.setText("");

@@ -39,27 +39,62 @@ public class CarroObject {
         this.valor = valor;
     }
     
-    public String registrarCarro() {
+    public void registrarCarro(String useDB) {
         
-        String status = "";
+        switch(useDB) {
         
+            case "MongoDB" : 
+                this.cadastrarCarroNoMongoDB(this.marca, this.modelo, this.cor, 
+                this.quantidadePortas, this.versao, this.tipo, this.anoFabricacao,
+                this.placa, this.valor);
+                break;
+            
+            case "MySQL" :
+                this.cadastrarCarroNoMySQL(this.marca, this.modelo, this.cor, 
+                this.quantidadePortas, this.versao, this.tipo, this.anoFabricacao,
+                this.placa, this.valor);
+                break;
+            
+            default : 
+                useDB = useDB == null ? "Nome DB não fornecido." : useDB;
+                
+                System.out.println("[ Java ] O banco de dados ("+useDB+") não existente. Por favor, Escolha entre [\"MongoDB\" ou \"MySQL\"] na classe Main.java.");
+                break;
+        }
+    }
+    
+    private void cadastrarCarroNoMySQL(String marca, String modelo, String cor, 
+            String quantidadePortas, String versao, String tipo, String anoFabricacao,
+            String placa, String valor) {
+
         try {
+
+            ConexaoMySQL mySql = new ConexaoMySQL();
+            mySql.conectar();
             
-            Connection conexaoMySQL = ConexaoMySQL.conectarMySQL();
-            System.out.println(conexaoMySQL);
-            
-            
-            ConexaoMySQL.cadastrarCarro(this.marca, this.modelo, this.cor, 
+            mySql.cadastrarCarro(this.marca, this.modelo, this.cor, 
             this.quantidadePortas, this.versao, this.tipo, this.anoFabricacao,
             this.placa, this.valor);
             
-            status = "Registrado com sucesso";
-            
+            mySql.fecharConexao();
+
         } catch(SQLException e) {
             
-            status = "Falha no registro";            
+            System.out.println("[ MySQL ] Erro ao tentar cadastrar o documento.");
         }
-        
-        return status;
     }
-}   
+    
+    private void cadastrarCarroNoMongoDB(String marca, String modelo, String cor, 
+            String quantidadePortas, String versao, String tipo, String anoFabricacao,
+            String placa, String valor) {
+        
+        ConexaoMongoDB mongo = new ConexaoMongoDB();
+        mongo.conectar();
+        
+        mongo.cadastrarCarro(this.marca, this.modelo, this.cor,
+            this.quantidadePortas, this.versao, this.tipo, this.anoFabricacao,
+            this.placa, this.valor);
+        
+        mongo.fecharConexao();
+    }
+} 
