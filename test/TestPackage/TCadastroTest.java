@@ -1,10 +1,15 @@
+package TestPackage;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package JUnitTests;
 
+import Concessionaria.Main;
+import Concessionaria.TCadastro;
+import java.sql.SQLException;
+import junit.framework.Assert;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -16,15 +21,16 @@ import static org.junit.Assert.*;
  *
  * @author tfn-3
  */
-public class TCadastroJUnitTest {
+public class TCadastroTest {
     
-    public TCadastroJUnitTest() {
-        System.out.println("[ JUnit ] Testando conexaoMongoDB()");
-        assertNotNull(null);
-    }
+    private static String[] args;
+    
+    //public TCadastroTest() {
+    //}
     
     @BeforeClass
     public static void setUpClass() {
+     
     }
     
     @AfterClass
@@ -42,7 +48,16 @@ public class TCadastroJUnitTest {
     // TODO add test methods here.
     // The methods must be annotated with annotation @Test. For example:
     //
-    // @Test
-    // public void hello() {}
+    @Test
+    public void ControleSucesso() {
+        
+        Assert.assertEquals("Valid", "Valid");
+    }
+    
+    @Test
+    public void ControleErro() {
+        
+        Assert.assertEquals("Valid", "Invalid");
+    }
     
 }

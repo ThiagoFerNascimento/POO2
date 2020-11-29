@@ -7,7 +7,6 @@ package Concessionaria;
 
 import com.mysql.jdbc.Connection;
 import java.sql.SQLException;
-
 /**
  *
  * @author tfn-3
@@ -96,5 +95,7 @@ public class CarroObject {
             this.placa, this.valor);
         
         mongo.fecharConexao();
+        
+        
     }
 } 
